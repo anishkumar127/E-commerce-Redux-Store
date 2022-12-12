@@ -3,13 +3,27 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState: [],
+  initialState: {
+    data: [],
+    quantity: 0,
+  },
   reducers: {
     add(state, action) {
-      state.push(action.payload);
+      // state.push(action.payload); old way its giving the unique id issue.
+      const itemInCart = state.data.find(
+        (item) => item.id === action.payload.id
+      );
+      if (itemInCart) {
+        itemInCart.quantity++;
+      } else {
+        state.data = [...state.data, { ...action.payload, quantity: 1 }];
+      }
     },
     remove(state, action) {
-      return state.filter((item) => item.id != action.payload);
+      // old way
+      // return state.data.filter((item) => item.id != action.payload.id);
+
+      state.data = state.data.filter((item) => item.id !== action.payload.id);
     },
   },
 });

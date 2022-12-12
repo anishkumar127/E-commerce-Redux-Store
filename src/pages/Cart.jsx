@@ -3,9 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { remove } from "../store/cartSlice";
 const Cart = () => {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.cart);
+  const { data: products } = useSelector((state) => state.cart);
   const handleRemove = (productId) => {
-    // console.log(productId); index ayega.
     dispatch(remove(productId));
   };
   return (
@@ -17,7 +16,7 @@ const Cart = () => {
             <img src={product.image} alt="image" />
             <h5>{product.title}</h5>
             <h5>{product.price}</h5>
-            <button className="btn" onClick={() => handleRemove(product.id)}>
+            <button className="btn" onClick={() => handleRemove(product)}>
               Remove
             </button>
           </div>
